@@ -17,3 +17,5 @@ model Users {
   password   String
   created_at DateTime @default(now())
 }
+
+

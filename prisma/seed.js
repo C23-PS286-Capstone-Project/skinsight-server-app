@@ -40,14 +40,13 @@ async function main() {
 //       },
 //     },
 //   })
-    const users = await prisma.users.upsert({
-        where: {},
-        update: {},
-        create: {
-            name: 'Developer',
-            username: 'root',
-            password: 'root'
-        }
+await prisma.users.deleteMany()
+    const users = await prisma.users.createMany({
+      data: {
+        name: 'Developer',
+        username: 'root',
+        password: 'root'
+      }
     })
   console.log({ users })
 }
