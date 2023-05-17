@@ -1,22 +1,33 @@
 {
   "name": "skinsight-server-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": ">=18.0.0"
   },
-  "author": "",
-  "license": "ISC",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "babel-node .",
+    "start:production": "node ./build/index.js",
+    "serve": "nodemon --exec node_modules/.bin/babel-node .",
+    "build": "babel src -d build --copy-files",
+    "deploy": "npm run build && node ./build/index.js"
+  },
+  "author": "C23-PS286-Capstone-Project",
+  "license": "MIT",
+  "private": "true",
   "dependencies": {
     "@prisma/client": "^4.14.0",
     "axios": "^1.4.0",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
-    "jsonwebtoken": "^9.0.0"
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
