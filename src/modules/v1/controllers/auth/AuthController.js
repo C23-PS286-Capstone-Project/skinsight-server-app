@@ -1,6 +1,8 @@
 import { compare } from "bcrypt"
 import { sign, decode } from 'jsonwebtoken'
 import { PrismaClient } from "@prisma/client"
+import { validateForm } from "../../../../utils/helper"
+const { hash, genSalt } = require('bcrypt')
 
 const prisma = new PrismaClient()
 
@@ -43,7 +45,7 @@ export const login = async (req, res) => {
         res.json({
             status: 'success',
             message: 'Login success',
-            token: { token }
+            data: { token, "Type": "Bearer" }
         })
     } else {
         res.status(401).json({
@@ -75,4 +77,35 @@ export const refreshToken = async (req, res) => {
         message: 'New token has been issued',
         token: newJwtToken
     })
+}
+
+export const register = async (req, res) => {
+    const { name, gender, birthday, birthplace, address, email, username, password } = req.body
+
+    try {
+        if (validateForm(req, res)) {
+            const user = await prisma.user.create({
+                data: {
+                    name: name,
+                    gender: gender,
+                    birthday: birthday,
+                    birthplace: birthplace,
+                    address: address,
+                    email: email,
+                    username: username,
+                    password: await hash(password, await genSalt())
+                }
+            })
+            res.status(201).json({
+                status: 'success',
+                message: 'Successfully created user',
+                data: user
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message || 'Unknown error'
+        })
+    }
 }

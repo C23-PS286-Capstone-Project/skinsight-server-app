@@ -8,6 +8,11 @@ async function main() {
         {data: [
             {
                 name: 'Developer',
+                gender: 'male',
+                birthday: '2000-12-10',
+                email: 'dev@example.com',
+                birthplace: 'Jakarta',
+                address: 'Jakarta',
                 username: 'root',
                 password: await hash('root', await genSalt())
             }

@@ -2,10 +2,25 @@ POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "username": "root",
-    "password": "root"
+    "username": "aaaa",
+    "password": "aaaa"
 }
 
 ###
 GET http://localhost:8000/api/v1/auth/verify
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkFBIiwiaWF0IjoxNjg0MzMxMjc5LCJleHAiOjE2ODk1MTUyNzl9.5W_z6qfiChz6huTEv6WG5zeVm7LXXM1P5fZAKYWSKAo
+
+###
+POST http://localhost:8000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "name":"a",
+    "gender":"a",
+    "birthday":"a",
+    "birthplace":"a",
+    "address":"a",
+    "email":"a",
+    "username":"aaaa",
+    "password":"aaaa"
+}
