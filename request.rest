@@ -2,8 +2,8 @@ POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "username": "aaaa",
-    "password": "aaaa"
+    "username": "root",
+    "password": "root"
 }
 
 ###

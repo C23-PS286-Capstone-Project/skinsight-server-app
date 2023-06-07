@@ -16,28 +16,36 @@ enum Gender {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  // gender     Gender
-  gender     String
+  gender     Gender
+  // gender     String
   // birthday   DateTime
   birthday   String
   birthplace String
-  address    String
-  email      String   @unique
-  username   String   @unique
+  address    String    @db.Text
+  email      String    @unique
+  username   String    @unique
   password   String
-  picture    String?
-  created_at DateTime @default(now())
+  picture    String?   @default("default.png")
+  created_at DateTime  @default(now())
   // history    Log[]
+  History    History[]
 
   @@map("users")
 }
 
-// model Log {
-//   id        Int      @id @default(autoincrement())
-//   timestamp DateTime @default(now())
-//   message   String
-//   user      User     @relation(fields: [user_id], references: [id])
-//   user_id   Int
-// }
+model History {
+  id                Int      @id @default(autoincrement())
+  user_id           Int
+  image             String
+  prediction_age    Int
+  prediction_result String   @db.Text
+  date              DateTime
+  created_at        DateTime @default(now())
+  // timestamp         DateTime @default(now())
+  // message           String
+  user              User     @relation(fields: [user_id], references: [id])
+
+  @@map("histories")
+}

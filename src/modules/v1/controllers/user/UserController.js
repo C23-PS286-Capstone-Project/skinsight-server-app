@@ -3,26 +3,26 @@ import { PrismaClient } from "@prisma/client"
 import { validateForm } from "../../../../utils/helper"
 import e from 'cors'
 import { error } from 'console'
-const {Storage} = require('@google-cloud/storage')
-const fs = require('fs')
-const path = require('path')
-const dateFormat = require('dateformat')
+// const {Storage} = require('@google-cloud/storage')
+// const fs = require('fs')
+// const path = require('path')
+// const dateFormat = require('dateformat')
 
-const pathKey = path.resolve('./serviceaccountkey.json')
+// const pathKey = path.resolve('./serviceaccountkey.json')
 
 const prisma = new PrismaClient()
 
-const gcs = new Storage({
-    projectId: '',
-    keyFilename: pathKey
-})
+// const gcs = new Storage({
+//     projectId: '',
+//     keyFilename: pathKey
+// })
 
-const bucketName = ''
-const bucket = gcs.bucket(bucketName)
+// const bucketName = ''
+// const bucket = gcs.bucket(bucketName)
 
-function getPublicUrl(filename) {
-    return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
-}
+// function getPublicUrl(filename) {
+//     return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
+// }
 
 // export const imgUpload = async (req, res, next) => {
 //     if (!req.file) return next()
@@ -35,12 +35,15 @@ export const updateUser = async (req, res, next) => {
 
     const {name, gender, birthday, birthplace, address, email} = req.body;
 
+    let user = {}, picture = 'default.png'
+
+
     try {
         if (validateForm(req, res)) {
             if (!req.file) {
-                const user = await prisma.user.update({
+                user = await prisma.user.update({
                     where: {
-                        id: Number(userId)
+                        id: userId
                     },
                     data: {
                         name: name,
@@ -55,31 +58,40 @@ export const updateUser = async (req, res, next) => {
                     }
                 });
             } else {
-                const gcsname = 'User_' + dateFormat(new Date(), "yyyymmdd-HHMMss")
-                const file = bucket.file(gcsname)
-
-                const stream = file.createWriteStream({
-                    metadata: {
-                        contentType: req.file.mimetype
+                user = await prisma.user.findUnique({
+                    where: {
+                        id: userId
                     }
                 })
 
-                stream.on('error', (error) => {
-                    req.file.cloudStorageError = error
-                    next(error)
-                })
-
-                stream.on('finish', () => {
-                    req.file.cloudStorageObject = gcsname
-                    req.file.cloudStoragePublicUrl = getPublicUrl(gcsname)
-                    next()
-                })
-
-                stream.end(req.file.buffer)
-
-                const user = await prisma.user.update({
+                if (user.picture != 'default.png') {
+                    picture = 'User_' + dateFormat(new Date(), "yyyymmdd-HHMMss")
+                    const file = bucket.file(picture)
+    
+                    const stream = file.createWriteStream({
+                        metadata: {
+                            contentType: req.file.mimetype
+                        }
+                    })
+    
+                    stream.on('error', (error) => {
+                        req.file.cloudStorageError = error
+                        next(error)
+                    })
+    
+                    stream.on('finish', () => {
+                        req.file.cloudStorageObject = picture
+                        req.file.cloudStoragePublicUrl = getPublicUrl(picture)
+                        next()
+                    })
+    
+                    stream.end(req.file.buffer)
+    
+                    
+                }
+                user = await prisma.user.update({
                     where: {
-                        id: Number(userId)
+                        id: userId
                     },
                     data: {
                         name: name,
@@ -90,7 +102,7 @@ export const updateUser = async (req, res, next) => {
                         email: email, 
                         // username: username, 
                         // password: password, 
-                        picture: gcsname
+                        picture: picture
                     }
                 });
             }

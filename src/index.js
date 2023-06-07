@@ -10,7 +10,7 @@ const loaded = {
 const PORT = process.env.PORT || 8000
 const server = express()
 
-server.use(express.static(path.join(__dirname, '...', 'public')))
+server.use(express.static(path.join(__dirname, '../public')))
 
 const notFoundHandler = (req, res) => {
     res.status(404).json({
