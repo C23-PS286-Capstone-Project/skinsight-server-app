@@ -38,10 +38,10 @@ model User {
 model History {
   id                Int      @id @default(autoincrement())
   user_id           Int
-  image             String
+  image             String?
   prediction_age    Int
   prediction_result String   @db.Text
-  date              DateTime
+  // date              DateTime
   created_at        DateTime @default(now())
   // timestamp         DateTime @default(now())
   // message           String

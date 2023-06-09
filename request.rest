@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8000/api/v1/auth/verify
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkFBIiwiaWF0IjoxNjg0MzMxMjc5LCJleHAiOjE2ODk1MTUyNzl9.5W_z6qfiChz6huTEv6WG5zeVm7LXXM1P5fZAKYWSKAo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkRldmVsb3BlciIsImlhdCI6MTY4NjMyNjcwMCwiZXhwIjoxNjkxNTEwNzAwfQ.SHzjXsNYb9wlIMCZ1iJkbd5ofiNX--YprLVA6eivxVs
 
 ###
 POST http://localhost:8000/api/v1/auth/register
@@ -16,11 +16,21 @@ Content-Type: application/json
 
 {
     "name":"a",
-    "gender":"a",
+    "gender":"male",
     "birthday":"a",
     "birthplace":"a",
     "address":"a",
     "email":"a",
     "username":"aaaa",
     "password":"aaaa"
+}
+
+###
+POST http://localhost:8000/api/v1/history/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkRldmVsb3BlciIsImlhdCI6MTY4NjMyNjcwMCwiZXhwIjoxNjkxNTEwNzAwfQ.SHzjXsNYb9wlIMCZ1iJkbd5ofiNX--YprLVA6eivxVsa
+Content-Type: application/json
+
+{
+    "prediction_age":40,
+    "prediction_result":"test"
 }
