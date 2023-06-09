@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY prisma ./prisma/
 RUN npm install
-RUN npx primsa generate
+RUN npx prisma generate
 RUN npx prisma migrate dev --name init
 
 # Bundle app source
