@@ -6,7 +6,6 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json and package-lock.json are copied
 COPY package*.json ./
 COPY prisma ./prisma/
-ENV DATABASE_URL="url"
 
 RUN npm install
 RUN npx primsa generate
