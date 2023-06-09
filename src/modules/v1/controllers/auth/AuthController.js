@@ -2,7 +2,7 @@ import { compare } from "bcrypt"
 import { sign, decode } from 'jsonwebtoken'
 import { PrismaClient } from "@prisma/client"
 import { validateForm } from "../../../../utils/helper"
-const { hash, genSalt } = require('bcrypt')
+import { hash, genSalt } from 'bcrypt'
 
 const prisma = new PrismaClient()
 
