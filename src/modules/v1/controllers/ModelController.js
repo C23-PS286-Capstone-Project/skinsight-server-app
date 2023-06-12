@@ -24,6 +24,12 @@ function getPublicUrl(fileName) {
 export const predict = async (req, res) => {
   const { id: userId } = decode(req.headers.authorization.split(' ')[1])
 
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId
+    }
+  })
+
   // Reference : https://github.com/tensorflow/tfjs/issues/1432#issuecomment-475425261
   const model = await tf.loadLayersModel(
     `${process.env.BASE_URL}/saved_model/model.json`
@@ -41,18 +47,28 @@ export const predict = async (req, res) => {
     );
 
     // Convert predictions to probabilities and class names.
+    const classes = [
+      "0-3",
+      "4-6",
+      "8-14",
+      "15-23",
+      "24-35",
+      "36-46",
+      "47-59",
+      "60-100",
+    ]
+
     const predictionClass = Array.from(predictions.dataSync());
     const probabilities = predictionClass
       .map((pb, index) => {
         return {
-          class: index + 1,
+          class: classes[index],
           probability: pb,
         };
-      })
-      .filter((data) => data.probability > 0.8);
+      })      
 
     return probabilities;
-  });
+  });  
 
   const gcsname = dateFormat(new Date(), "yyyymmdd-HHMMss")
   const file = bucket.file(gcsname)
@@ -75,12 +91,25 @@ export const predict = async (req, res) => {
   
   stream.end(req.file.buffer)
 
+  const splitPredictRange = result[0].class.split('-')
+  const userBirthday = new Date(user.birthday)
+  const userYear = userBirthday.getFullYear()  
+  const userAge = new Date().getFullYear() - userYear
+
+  let resultDecision = ""
+  if(userAge >= parseInt(splitPredictRange[0]) && userAge <= parseInt(splitPredictRange[1])) {
+    resultDecision = "Tidak mengalami penuaan dini"
+  } else {
+    resultDecision = "Mengalami penuaan dini"
+  }
+
   const history = await prisma.history.create({
       data: {
           user_id: userId,
-          prediction_age: 22, // Change it
-          prediction_result: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia repudiandae ratione, molestias ad omnis doloremque aut numquam cum aliquid magni iure consectetur laborum ipsam et exercitationem voluptate provident quae beatae.', // Change it
-          // date: date,
+          prediction_age: result[0].class, 
+          prediction_score: result[0].probability,
+          prediction_result: resultDecision,
+          date: new Date().toISOString(),
           image: getPublicUrl(gcsname)
       }
   })
