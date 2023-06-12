@@ -70,6 +70,8 @@ export const predict = async (req, res) => {
     return probabilities;
   });  
 
+  console.log(result)
+
   const gcsname = dateFormat(new Date(), "yyyymmdd-HHMMss")
   const file = bucket.file(gcsname)
   const stream = file.createWriteStream({
@@ -110,7 +112,9 @@ export const predict = async (req, res) => {
     prediction_age: result[0].class, 
     prediction_result: resultDecision,
     date: new Date()
-}
+  }
+
+  console.log(history)
 
   await prisma.history.create({
       data: history
