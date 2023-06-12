@@ -26,7 +26,7 @@ export const predict = async (req, res) => {
 
   // Reference : https://github.com/tensorflow/tfjs/issues/1432#issuecomment-475425261
   const model = await tf.loadLayersModel(
-    "http://127.0.0.1:8000/saved_model/model.json"
+    `${process.env.BASE_URL}/saved_model/model.json`
   );
 
   // request image file from client
