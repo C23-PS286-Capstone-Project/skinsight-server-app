@@ -10,9 +10,10 @@ COPY prisma ./prisma/
 COPY public ./public/
 
 RUN npm install
-RUN npx prisma migrate dev --name init
+# RUN npx prisma migrate dev --name init
 RUN npx prisma db pull
 RUN npx prisma db push
+RUN npx prisma db seed
 
 # Bundle app source
 COPY . .
