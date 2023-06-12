@@ -103,15 +103,17 @@ export const predict = async (req, res) => {
     resultDecision = "Mengalami penuaan dini"
   }
 
-  const history = await prisma.history.create({
-      data: {
-          user_id: userId,
-          prediction_age: result[0].class, 
-          prediction_score: result[0].probability,
-          prediction_result: resultDecision,
-          // date: new Date().toISOString(),
-          image: getPublicUrl(gcsname)
-      }
+  history = {
+    user_id: userId,
+    image: getPublicUrl(gcsname),
+    prediction_score: parseFloat(result[0].probability.toString()),
+    prediction_age: result[0].class, 
+    prediction_result: resultDecision,
+    date: new Date()
+}
+
+  await prisma.history.create({
+      data: history
   })
 
   res.json({
