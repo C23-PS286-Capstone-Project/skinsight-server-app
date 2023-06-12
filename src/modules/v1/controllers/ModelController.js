@@ -105,7 +105,7 @@ export const predict = async (req, res) => {
     resultDecision = "Mengalami penuaan dini"
   }
 
-  history = {
+  historyData = {
     user_id: userId,
     image: getPublicUrl(gcsname),
     prediction_score: parseFloat(result[0].probability.toString()),
@@ -114,15 +114,15 @@ export const predict = async (req, res) => {
     date: new Date()
   }
 
-  console.log(history)
+  console.log(historyData)
 
   await prisma.history.create({
-      data: history
+      data: historyData
   })
 
   res.json({
     status: "success",
     message: "Prediction success",
-    data: history,
+    data: historyData,
   });
 };
