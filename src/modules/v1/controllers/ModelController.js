@@ -105,7 +105,7 @@ export const predict = async (req, res) => {
     resultDecision = "Mengalami penuaan dini"
   }
 
-  historyData = {
+  const historyData = {
     user_id: userId,
     image: getPublicUrl(gcsname),
     prediction_score: parseFloat(result[0].probability.toString()),
