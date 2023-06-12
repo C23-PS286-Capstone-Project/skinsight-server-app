@@ -10,7 +10,7 @@ const prisma = new PrismaClient()
 const pathKey = resolve('./serviceaccountkey.json')
 
 const gcs = new Storage({
-    projectId: '	cryptic-opus-381211',
+    projectId: 'cryptic-opus-381211',
     keyFilename: pathKey
 })
 
