@@ -10,11 +10,11 @@ const prisma = new PrismaClient()
 const pathKey = resolve('./serviceaccountkey.json')
 
 const gcs = new Storage({
-    projectId: 'project id in here',
+    projectId: '	cryptic-opus-381211',
     keyFilename: pathKey
 })
 
-const bucketName = 'bucket name in here'
+const bucketName = 'skinsight-app-bucket'
 const bucket = gcs.bucket(bucketName)
 
 function getPublicUrl(fileName) {
