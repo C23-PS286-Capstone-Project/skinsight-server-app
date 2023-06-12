@@ -28,8 +28,10 @@ model History {
   id                Int      @id @default(autoincrement())
   user_id           Int
   image             String?
+  prediction_score  Int
   prediction_age    Int
   prediction_result String   @db.Text
+  date              DateTime
   created_at        DateTime @default(now())
   user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
