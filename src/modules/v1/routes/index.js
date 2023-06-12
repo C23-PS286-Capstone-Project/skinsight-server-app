@@ -4,14 +4,13 @@ import multer from 'multer'
 import { login, refreshToken, register, verifyToken } from '../controllers/auth/AuthController'
 import authenticatedMiddleware from '../middleware/authenticated'
 import imageUploadMiddleware from '../middleware/uploadImage'
-import { updateUser } from '../controllers/user/UserController'
+import { getUser, updateUser } from '../controllers/user/UserController'
 import { predict } from '../controllers/ModelController';
-import { createHistory } from '../controllers/history/HistoryController'
+import { getHistory } from '../controllers/history/HistoryController'
 
 // Validations
 import { createValidation as registerUserValidation } from '../validations/RegitserValidation'
 import { updateValidation as updateUserValidation } from '../validations/UserValidation'
-import { createValidation as createHistoryValidation } from '../validations/HistoryValidation'
 
 // const router = Router();
 
@@ -44,23 +43,25 @@ export const loadUserRouter = app => {
     const router = Router()
 
     router.use(authenticatedMiddleware)
-    router.route('/update').post(...updateUserValidation, updateUser)
+    // router.route('/update').post(...updateUserValidation, updateUser)
+    router.get('/profile', getUser)
     
-    app.use('/user', router)
+    app.use('/users', router)
 }
 
 export const loadModelRouter = app => {
     const router = Router()
     router.use(authenticatedMiddleware)
-  router.post('/predict', upload.single('image'), predict);
+  router.post('/predict', imageUploadMiddleware(upload.single('image')), predict);
 
-  app.use('/image', router)
+  app.use('/faces', router)
 };
 
 export const loadHistoryRouter = app => {
   const router = Router()
   router.use(authenticatedMiddleware)
-  router.post('/create', imageUploadMiddleware(upload.single('image')), ...createHistoryValidation, createHistory)
+  router.get('/', getHistory)
+  // router.post('/create', imageUploadMiddleware(upload.single('image')), ...createHistoryValidation, createHistory)
 
-  app.use('/history', router)
+  app.use('/histories', router)
 }

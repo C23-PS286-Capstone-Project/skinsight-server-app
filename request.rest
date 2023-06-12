@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8000/api/v1/auth/verify
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkRldmVsb3BlciIsImlhdCI6MTY4NjMyNjcwMCwiZXhwIjoxNjkxNTEwNzAwfQ.SHzjXsNYb9wlIMCZ1iJkbd5ofiNX--YprLVA6eivxVs
+Authorization: Bearer Token in here
 
 ###
 POST http://localhost:8000/api/v1/auth/register
@@ -20,17 +20,37 @@ Content-Type: application/json
     "birthday":"a",
     "birthplace":"a",
     "address":"a",
-    "email":"a",
-    "username":"aaaa",
+    "email":"aa",
+    "username":"aaaaa",
     "password":"aaaa"
 }
 
 ###
-POST http://localhost:8000/api/v1/history/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkRldmVsb3BlciIsImlhdCI6MTY4NjMyNjcwMCwiZXhwIjoxNjkxNTEwNzAwfQ.SHzjXsNYb9wlIMCZ1iJkbd5ofiNX--YprLVA6eivxVsa
+GET http://localhost:8000/api/v1/histories
+Authorization: Bearer Token in here
+
+###
+POST http://localhost:8000/api/v1/histories/create
+Authorization: Bearer Token in here
 Content-Type: application/json
 
 {
     "prediction_age":40,
-    "prediction_result":"test"
+    "prediction_result":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia repudiandae ratione, molestias ad omnis doloremque aut numquam cum aliquid magni iure consectetur laborum ipsam et exercitationem voluptate provident quae beatae."
 }
+
+###
+POST http://localhost:8000/api/v1/faces/predict
+Authorization: Bearer Token in here
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="pexels-simon-robben-614810.jpg"
+Content-Type: image/jpeg
+
+(data)
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+GET http://localhost:8000/api/v1/users/profile
+Authorization: Bearer Token in here

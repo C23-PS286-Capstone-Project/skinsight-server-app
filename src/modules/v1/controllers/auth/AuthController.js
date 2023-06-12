@@ -84,6 +84,22 @@ export const register = async (req, res) => {
 
     try {
         if (validateForm(req, res)) {
+            const check  = await prisma.user.count({
+                where: {
+                    OR: [
+                        { username: username },
+                        { email: email }
+                    ]
+                }
+            })
+
+            if (check > 0) {
+                return res.status(422).json({
+                    status: 'fail',
+                    message: 'Username or email already exist'
+                })
+            }
+
             const user = await prisma.user.create({
                 data: {
                     name: name,
