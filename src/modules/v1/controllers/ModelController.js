@@ -109,7 +109,7 @@ export const predict = async (req, res) => {
           prediction_age: result[0].class, 
           prediction_score: result[0].probability,
           prediction_result: resultDecision,
-          date: new Date().toISOString(),
+          // date: new Date().toISOString(),
           image: getPublicUrl(gcsname)
       }
   })
