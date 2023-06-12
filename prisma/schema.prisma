@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:@34.143.244.43:3306/skinsight-server-app-db?schema=public"
+  url      = "mysql://root:@34.143.244.43:3306/skinsight-server-app-db"
 }
 
 enum Gender {
