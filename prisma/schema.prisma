@@ -28,8 +28,8 @@ model History {
   id                Int      @id @default(autoincrement())
   user_id           Int
   image             String?
-  prediction_score  Int
-  prediction_age    Int
+  prediction_score  Float
+  prediction_age    String
   prediction_result String   @db.Text
   date              DateTime
   created_at        DateTime @default(now())
