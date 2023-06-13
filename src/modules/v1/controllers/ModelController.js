@@ -65,7 +65,7 @@ export const predict = async (req, res) => {
           class: classes[index],
           probability: pb,
         };
-      })      
+      }).sort((a, b) => b.probability - a.probability);      
 
     return probabilities;
   });  
@@ -99,10 +99,10 @@ export const predict = async (req, res) => {
   const userAge = new Date().getFullYear() - userYear
 
   let resultDecision = ""
-  if(userAge >= parseInt(splitPredictRange[0]) && userAge <= parseInt(splitPredictRange[1])) {
-    resultDecision = "Tidak mengalami penuaan dini"
-  } else {
+  if(userAge > parseInt(splitPredictRange[1])){
     resultDecision = "Mengalami penuaan dini"
+  }else {
+    resultDecision = "Tidak mengalami penuaan dini"
   }
 
   const historyData = {
