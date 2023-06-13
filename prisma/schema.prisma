@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:@34.143.244.43:3306/skinsight-server-app-db"
+  url      = "mysql://root:N0tHiNgP4sSw0Rd@34.143.244.43:3306/skinsight-server-app-db"
 }
 
 model User {
@@ -28,9 +28,9 @@ model History {
   id                Int      @id @default(autoincrement())
   user_id           Int
   image             String?
-  prediction_score  Float?
-  prediction_age    String?
-  prediction_result String?  @db.Text
+  prediction_score  Float
+  prediction_age    String
+  prediction_result String   @db.Text
   date              DateTime
   created_at        DateTime @default(now())
   user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
