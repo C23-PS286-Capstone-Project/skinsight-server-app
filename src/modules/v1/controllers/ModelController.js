@@ -65,10 +65,12 @@ export const predict = async (req, res) => {
           class: classes[index],
           probability: pb,
         };
-      })      
+      }).sort((a, b) => b.probability - a.probability);      
 
     return probabilities;
   });  
+
+  console.log(result)
 
   const gcsname = dateFormat(new Date(), "yyyymmdd-HHMMss")
   const file = bucket.file(gcsname)
@@ -97,26 +99,30 @@ export const predict = async (req, res) => {
   const userAge = new Date().getFullYear() - userYear
 
   let resultDecision = ""
-  if(userAge >= parseInt(splitPredictRange[0]) && userAge <= parseInt(splitPredictRange[1])) {
-    resultDecision = "Tidak mengalami penuaan dini"
-  } else {
+  if(userAge > parseInt(splitPredictRange[1])){
     resultDecision = "Mengalami penuaan dini"
+  }else {
+    resultDecision = "Tidak mengalami penuaan dini"
   }
 
-  const history = await prisma.history.create({
-      data: {
-          user_id: userId,
-          prediction_age: result[0].class, 
-          prediction_score: result[0].probability,
-          prediction_result: resultDecision,
-          date: new Date().toISOString(),
-          image: getPublicUrl(gcsname)
-      }
+  const historyData = {
+    user_id: userId,
+    image: getPublicUrl(gcsname),
+    prediction_score: parseFloat(result[0].probability.toString()),
+    prediction_age: result[0].class, 
+    prediction_result: resultDecision,
+    date: new Date()
+  }
+
+  console.log(historyData)
+
+  await prisma.history.create({
+      data: historyData
   })
 
   res.json({
     status: "success",
     message: "Prediction success",
-    data: history,
+    data: historyData,
   });
 };
