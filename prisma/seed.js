@@ -5,7 +5,7 @@ const { hash, genSalt } = require('bcrypt')
 async function main() {
     await prisma.user.deleteMany()
     await prisma.history.deleteMany()
-    await prisma.user.create({
+    let user = await prisma.user.create({
       data: {
         name: 'Developer',
         gender: 'male',
@@ -17,6 +17,16 @@ async function main() {
         password: await hash('root', await genSalt()),
         
     }
+    })
+    await prisma.history.create({
+      data: {
+        user_id: user.id,
+        image: null,
+        prediction_score: 10.5,
+        prediction_age: 20,
+        prediction_result: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis, repudiandae dolorum. Possimus, sunt. Fugiat tenetur, vel quae doloremque molestiae fugit soluta veniam consequuntur ad libero voluptate ipsa ut recusandae eius.',
+        date: new Date().toISOString()
+      }
     })
 }
 main()

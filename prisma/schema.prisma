@@ -28,7 +28,7 @@ model History {
   id                Int      @id @default(autoincrement())
   user_id           Int
   image             String?
-  prediction_score  Int
+  prediction_score  Float
   prediction_age    Int
   prediction_result String   @db.Text
   date              DateTime
