@@ -18,16 +18,15 @@ async function main() {
         
     }
     })
-    // await prisma.history.create({
-    //   data: {
-    //     user_id: user.id,
-    //     // image: null,
-    //     // prediction_score: 10.5,
-    //     // prediction_age: '20-40',
-    //     // prediction_result: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis, repudiandae dolorum. Possimus, sunt. Fugiat tenetur, vel quae doloremque molestiae fugit soluta veniam consequuntur ad libero voluptate ipsa ut recusandae eius.',
-    //     // date: new Date().toISOString()
-    //   }
-    // })
+    await prisma.history.create({
+      data: {
+        user_id: user.id,
+        image: null,
+        prediction_score: 10.5,
+        prediction_age: '20-40',
+        prediction_result: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis, repudiandae dolorum. Possimus, sunt. Fugiat tenetur, vel quae doloremque molestiae fugit soluta veniam consequuntur ad libero voluptate ipsa ut recusandae eius.',
+      }
+    })
 }
 main()
   .then(async () => {

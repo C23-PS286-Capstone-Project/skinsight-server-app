@@ -111,7 +111,7 @@ export const predict = async (req, res) => {
     prediction_score: parseFloat(result[0].probability.toString()),
     prediction_age: result[0].class, 
     prediction_result: resultDecision,
-    date: new Date()
+    // date: new Date()
   }
 
   console.log(historyData)

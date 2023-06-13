@@ -31,7 +31,7 @@ model History {
   prediction_score  Float
   prediction_age    String
   prediction_result String   @db.Text
-  date              DateTime
+  date              DateTime @default(now())
   created_at        DateTime @default(now())
   user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
