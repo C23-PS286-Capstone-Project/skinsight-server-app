@@ -2,6 +2,10 @@
 
 Backend apps for SkinSight
 
+## API Documentations
+
+https://documenter.getpostman.com/view/13203177/2s93m8xKRr
+
 ## Setup
 
 Note : Required NodeJS version >= 18.0.0
@@ -36,6 +40,13 @@ npx prisma db push
 npx prisma db seed
 ```
 
+- Connect to google cloud bucket
+
+```bash
+edit file serviceaccount.json
+edit projectId, bucketName on modelController
+```
+
 ## 🔥 Firing Up Server
 
 - Development Mode
@@ -46,4 +57,6 @@ npm run serve
 
 - Production Mode
 
-  **Working in Progress. Coming Soon**
+```bash
+On google cloud shell: gcloud run deploy skinsight-server-app --source .
+```
