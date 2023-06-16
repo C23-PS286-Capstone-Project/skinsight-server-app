@@ -28,6 +28,12 @@ npm install
 cp .env.example .env
 ```
 
+- Connect to database
+
+```bash
+edit url on scheme.prisma
+```
+
 - Database migration
 
 ```bash
@@ -43,8 +49,8 @@ npx prisma db seed
 - Connect to google cloud bucket
 
 ```bash
-edit file serviceaccount.json
-edit projectId, bucketName on modelController
+edit file serviceaccountkey.json
+edit projectId, bucketName on ModelController.json
 ```
 
 ## 🔥 Firing Up Server
