@@ -24,6 +24,18 @@ npm install
 cp .env.example .env
 ```
 
+- Database migration
+
+```bash
+npx prisma db push
+```
+
+- Database seeder
+
+```bash
+npx prisma db seed
+```
+
 ## 🔥 Firing Up Server
 
 - Development Mode
